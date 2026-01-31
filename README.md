@@ -1,7 +1,5 @@
 Signals — AI-Powered Market Intelligence  Turn any company name or pitch deck into verified intelligence in seconds. Real-time web crawling, document parsing, and AI analysis — stored, searchable, and always updating.  Built at Hack the Stackathon @ YC HQ. Powered by Firecrawl, Reducto, MongoDB, OpenRouter, Supabase, and Resend.
 
-Signals — AI-Powered Market Intelligence  Turn any company name or pitch deck into verified intelligence in seconds. Real-time web crawling, document parsing, and AI analysis — stored, searchable, and always updating.  Built at Hack the Stackathon @ YC HQ. Powered by Firecrawl, Reducto, MongoDB, OpenRouter, Supabase, and Resend.
-
 
 - [ ] Create Express/FastAPI server with health check endpoint
 - [ ] Set up Resend inbound webhook at `/webhook/email`
