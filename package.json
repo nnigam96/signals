@@ -4,8 +4,9 @@
   "description": "Signals — AI-Powered Market Intelligence  Turn any company name or pitch deck into verified intelligence in seconds. Real-time web crawling, document parsing, and AI analysis — stored, searchable, and always updating.  Built at Hack the Stackathon @ YC HQ. Powered by Firecrawl, Reducto, MongoDB, OpenRouter, Supabase, and Resend.",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "node --watch src/index.js",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,9 +16,22 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nnigam96/signals/issues"
+  },
+  "homepage": "https://github.com/nnigam96/signals#readme",
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.25",
+    "@types/node": "^25.1.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
   "dependencies": {
+    "cors": "^2.8.6",
     "dotenv": "^17.2.3",
-    "express": "^5.2.1",
+    "express": "^4.22.1",
     "resend": "^6.9.1"
   }
 }
