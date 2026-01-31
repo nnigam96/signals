@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nnigam96/signals.git"
+    "url": "http://local_proxy@127.0.0.1:55553/git/nnigam96/signals"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +30,8 @@
   },
   "dependencies": {
     "cors": "^2.8.6",
-    "express": "^4.22.1"
+    "dotenv": "^17.2.3",
+    "express": "^4.22.1",
+    "resend": "^6.9.1"
   }
 }
