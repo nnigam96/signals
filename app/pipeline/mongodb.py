@@ -46,3 +46,46 @@ def store_snapshot(slug, data):
 
 def toggle_watchlist(slug, enabled):
     _co().update_one({"slug": slug}, {"$set": {"watchlist": enabled}})
+
+def get_knowledge_collection() -> Collection:
+    assert _db is not None, "Call connect_db() first"
+    return _db["knowledge"]
+
+def search_knowledge(query: str, company_slug: str = None, limit: int = 5):
+    """
+    Performs a Vector Search on the 'knowledge' collection.
+    """
+    # Lazy import to avoid circular dependency
+    from app.pipeline.rag import embedding_model 
+    
+    # 1. Embed the user's question
+    # This returns a generator, so we take the first item
+    query_vector = list(embedding_model.embed([query]))[0].tolist()
+    
+    # 2. Vector Search Pipeline
+    pipeline = [
+        {
+            "$vectorSearch": {
+                "index": "vector_index",       # We will create this in Atlas UI
+                "path": "vector",
+                "queryVector": query_vector,
+                "numCandidates": 100,          # How many neighbors to consider
+                "limit": limit                 # How many to return
+            }
+        },
+        {
+            "$project": {
+                "_id": 0,
+                "text": 1,
+                "source": 1,
+                "score": {"$meta": "vectorSearchScore"}
+            }
+        }
+    ]
+
+    # Optional: Filter by specific company
+    # Note: For this to work, 'company_slug' must be defined as a filter field in Atlas
+    if company_slug:
+        pipeline[0]["$vectorSearch"]["filter"] = {"company_slug": company_slug}
+
+    return list(get_knowledge_collection().aggregate(pipeline))

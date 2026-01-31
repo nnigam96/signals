@@ -1,5 +1,7 @@
 import asyncio
 import logging
+import json
+import os
 from typing import Any
 import httpx
 from app.config import settings
@@ -13,20 +15,8 @@ def _headers() -> dict[str, str]:
         "Content-Type": "application/json",
     }
 
-async def scrape_url(url: str) -> str:
-    async with httpx.AsyncClient(timeout=30) as client:
-        res = await client.post(
-            f"{FIRECRAWL_BASE}/scrape",
-            headers=_headers(),
-            json={"url": url, "formats": ["markdown"]},
-        )
-    if res.status_code != 200:
-        logger.error(f"[firecrawl] Scrape failed {url}: {res.text[:100]}")
-        return ""
-    data = res.json()
-    return data.get("data", {}).get("markdown", "")
-
 async def search_web(query: str, limit: int = 5) -> list[str]:
+    """Basic search that returns a list of markdown snippets."""
     async with httpx.AsyncClient(timeout=30) as client:
         res = await client.post(
             f"{FIRECRAWL_BASE}/search",
@@ -34,34 +24,119 @@ async def search_web(query: str, limit: int = 5) -> list[str]:
             json={"query": query, "limit": limit},
         )
     if res.status_code != 200:
+        logger.error(f"[firecrawl] Search failed for '{query}': {res.status_code}")
         return []
+    
     data = res.json()
     return [item.get("markdown", "") for item in data.get("data", [])]
 
+async def scrape_url(url: str) -> str:
+    """Scrapes a specific URL to get full page markdown."""
+    if not url: return ""
+    
+    async with httpx.AsyncClient(timeout=45) as client:
+        res = await client.post(
+            f"{FIRECRAWL_BASE}/scrape",
+            headers=_headers(),
+            json={"url": url, "formats": ["markdown"]},
+        )
+    
+    if res.status_code != 200:
+        logger.error(f"[firecrawl] Scrape failed {url}: {res.status_code}")
+        return ""
+        
+    data = res.json()
+    return data.get("data", {}).get("markdown", "")
+
+async def find_company_url(name: str) -> str:
+    """Agentic step: Searches Google to find the company's official URL."""
+    async with httpx.AsyncClient(timeout=30) as client:
+        res = await client.post(
+            f"{FIRECRAWL_BASE}/search",
+            headers=_headers(),
+            json={"query": f"{name} official website home page", "limit": 1}
+        )
+    
+    data = res.json()
+    results = data.get("data", [])
+    if results:
+        url = results[0].get("url")
+        logger.info(f"[firecrawl] 🎯 Discovered URL for {name}: {url}")
+        return url
+    return ""
+
 async def crawl_company(name_or_url: str) -> dict[str, Any]:
-    logger.info(f"[firecrawl] Crawling: {name_or_url}")
-    is_url = name_or_url.startswith("http")
+    """
+    The Main Entry Point.
+    1. If input is name, find URL.
+    2. Scrape Homepage (Full Text).
+    3. Search for News/About (Snippets).
+    4. Combine for RAG.
+    """
+    logger.info(f"[firecrawl] Starting agentic crawl for: {name_or_url}")
     
-    homepage_task = scrape_url(name_or_url) if is_url else asyncio.sleep(0, "")
+    # Step 1: Resolve URL
+    target_url = name_or_url
+    if not name_or_url.startswith("http"):
+        target_url = await find_company_url(name_or_url)
     
-    # Determine search term
-    term = name_or_url
-    if is_url:
-        # crude extraction: https://stripe.com -> stripe.com
-        term = name_or_url.replace("https://", "").replace("http://", "").split("/")[0]
+    # Step 2: Parallel Execution
+    # We want the FULL homepage (for RAG context) and snippets for news
+    tasks = [
+        scrape_url(target_url),                                      # Task 0: Homepage
+        search_web(f"{name_or_url} latest news funding 2025 2026"),  # Task 1: News
+        search_web(f"{name_or_url} competitors and pricing"),        # Task 2: Market info
+    ]
+    
+    results = await asyncio.gather(*tasks)
+    homepage_md = results[0]
+    news_list = results[1]
+    market_list = results[2]
 
-    # Run searches in parallel
-    news_task = search_web(f"{term} latest news funding 2025 2026")
-    general_task = search_web(f"{term} company about team product")
-    
-    results = await asyncio.gather(homepage_task, news_task, general_task)
-    homepage, news, general = results
+    # Combine all text for the "Knowledge Engine"
+    # This 'raw' field is what we will chunk and embed later
+    full_context = f"SOURCE: {target_url}\n\n=== HOMEPAGE ===\n{homepage_md}\n\n"
+    full_context += "=== NEWS ===\n" + "\n---\n".join(news_list) + "\n\n"
+    full_context += "=== MARKET ===\n" + "\n---\n".join(market_list)
 
-    # Combine into one context blob
-    raw = f"HOMEPAGE:\n{homepage}\n\nGENERAL:\n" + "\n".join(general) + "\n\nNEWS:\n" + "\n".join(news)
-    
+    # Save to local debug file (Explicit request)
+    _save_debug_content(name_or_url, full_context)
+
     return {
-        "homepage": homepage,
-        "news": news,
-        "raw": raw
+        "url": target_url,
+        "homepage": homepage_md,
+        "news": news_list,
+        "raw": full_context  # <--- RAG uses this
     }
+
+def _save_debug_content(name: str, content: str):
+    """Helper to save crawled content to disk for inspection."""
+    try:
+        os.makedirs("crawled_data", exist_ok=True)
+        safe_name = "".join(c for c in name if c.isalnum() or c in (' ', '-', '_')).strip().replace(" ", "_")
+        filename = f"crawled_data/{safe_name}.md"
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(content)
+        logger.info(f"[firecrawl] 💾 Saved crawl content to {filename}")
+    except Exception as e:
+        logger.error(f"[firecrawl] Failed to save debug file: {e}")
+
+# ─── Manual Test Block ──────────────────────────────────────────────
+if __name__ == "__main__":
+    import sys
+    # Allow running `python app/pipeline/firecrawl.py "Stripe"`
+    
+    # Mock settings for standalone run
+    from dotenv import load_dotenv
+    load_dotenv()
+    if not settings.firecrawl_api_key:
+        settings.firecrawl_api_key = os.getenv("FIRECRAWL_API_KEY")
+
+    target = sys.argv[1] if len(sys.argv) > 1 else "Anthropic"
+    print(f"🕷️  Testing Agentic Crawl for: {target}")
+    
+    result = asyncio.run(crawl_company(target))
+    
+    print(f"\n✅ URL Found: {result.get('url')}")
+    print(f"📄 Content Length: {len(result['raw'])} chars")
+    print(f"💾 Check 'crawled_data/' folder for the output file.")
