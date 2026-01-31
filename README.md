@@ -68,6 +68,42 @@ Signals — AI-Powered Market Intelligence  Turn any company name or pitch deck 
 
 ---
 
+## Frontend Integration (signals-intelligence.lovable.app)
+
+**Dependencies & Config:**
+- [ ] Install `@anthropic-ai/sdk` for Claude integration
+- [ ] Install `mongodb` driver for persistence
+- [ ] Install `firecrawl` SDK for web scraping
+- [ ] Install `voyageai` SDK for embeddings
+- [ ] Add `FRONTEND_URL=https://signals-intelligence.lovable.app` to `.env` for CORS
+
+**API Endpoints for Dashboard:**
+- [ ] `GET /api/dashboard/:id` → return full research results for dashboard display
+- [ ] `GET /api/dashboard/:id/status` → return processing status and progress %
+- [ ] `POST /api/search` → wire to real research pipeline (currently simulated)
+- [ ] `GET /api/search/results/:jobId` → return completed research results
+
+**Research Pipeline Orchestration:**
+- [ ] Create `src/services/research-pipeline.js` to orchestrate all research steps
+- [ ] Wire webhook handler to trigger research pipeline on email receipt
+- [ ] Call Claude to extract idea → call all research functions → generate report
+- [ ] Send progress updates via `/notify/progress` as each step completes
+- [ ] Store final results in MongoDB with dashboard ID
+
+**Data Flow:**
+- [ ] Frontend submits idea text → backend creates job → returns jobId
+- [ ] Backend runs research pipeline async → updates progress
+- [ ] Frontend polls `/api/job/:jobId/status` for progress
+- [ ] When complete, frontend fetches `/api/dashboard/:id` for full results
+- [ ] Display research sections: papers, HN threads, competitors, market signals, report
+
+**Replace In-Memory Storage with MongoDB:**
+- [ ] Replace `jobs` Map in `search.ts` with MongoDB collection
+- [ ] Replace `signups` Map in `signup.js` with MongoDB collection
+- [ ] Add indexes for fast dashboard lookup by ID
+
+---
+
 ## API Reference
 
 ```
