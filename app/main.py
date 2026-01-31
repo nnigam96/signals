@@ -24,7 +24,7 @@ async def lifespan(app: FastAPI):
     # Startup
     connect_db()
     logger.info("")
-    logger.info("🚀 Signals API running on http://localhost:%s", settings.port)
+    logger.info("Signals API running on http://localhost:%s", settings.port)
     logger.info("   Front-end: https://lovable.dev/...")
     logger.info("")
     yield
