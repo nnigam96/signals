@@ -1,10 +1,10 @@
 Signals — AI-Powered Market Intelligence  Turn any company name or pitch deck into verified intelligence in seconds. Real-time web crawling, document parsing, and AI analysis — stored, searchable, and always updating.  Built at Hack the Stackathon @ YC HQ. Powered by Firecrawl, Reducto, MongoDB, OpenRouter, Supabase, and Resend.
 
 
-- [ ] Create Express/FastAPI server with health check endpoint
-- [ ] Set up Resend inbound webhook at `/webhook/email`
-- [ ] Parse webhook payload to extract email body text
-- [ ] Call Resend API to fetch full email body (webhook only sends metadata)
+- [x] ~~Create Express/FastAPI server with health check endpoint~~
+- [x] ~~Set up Resend inbound webhook at `/webhook/email`~~
+- [x] ~~Parse webhook payload to extract email body text~~
+- [x] ~~Call Resend API to fetch full email body (webhook only sends metadata)~~
 - [ ] Write Claude prompt: extract `{domain, problem, keywords[], competitors_mentioned[]}` from raw idea text
 - [ ] Test: send email "AI tool for extracting renewal dates from SaaS contracts" → log parsed output
 - [ ] Store parsed idea in MongoDB `ideas` collection
@@ -14,9 +14,9 @@ Signals — AI-Powered Market Intelligence  Turn any company name or pitch deck 
 - [ ] Handle empty results gracefully (some ideas won't have papers)
 - [ ] Test: search "contract extraction NLP" → log 5 papers
 - [ ] Store papers in MongoDB under `idea.research.papers`
-- [ ] Write function `searchHN(keywords)` → hits Algolia HN API (`hn.algolia.io/api/v1/search`)
-- [ ] Filter to stories + comments from last 2 years
-- [ ] Extract: `{title, url, points, num_comments, created_at}` for top 5
+- [x] ~~Write function `searchHN(keywords)` → hits Algolia HN API (`hn.algolia.io/api/v1/search`)~~
+- [x] ~~Filter to stories + comments from last 2 years~~
+- [x] ~~Extract: `{title, url, points, num_comments, created_at}` for top 5~~
 - [ ] Write function `scrapeTechmeme()` → Firecrawl scrape of techmeme.com homepage
 - [ ] Extract recent headlines mentioning keywords (simple string match)
 - [ ] Test: search "SaaS contracts" on HN → log 5 threads
@@ -43,11 +43,11 @@ Signals — AI-Powered Market Intelligence  Turn any company name or pitch deck 
 - [ ] Output as JSON with sections (not raw markdown)
 - [ ] Test: pass full research object → log structured report
 - [ ] Store report in MongoDB under `idea.report`
-- [ ] Write function `formatReportEmail(report)` → converts JSON to HTML email
-- [ ] Style: clean, scannable, mobile-friendly
-- [ ] Include section headers, bullet points, clickable links
-- [ ] Add verdict banner at top: "VALIDATED ✅" / "NEEDS MORE RESEARCH 🔍" / "CROWDED MARKET ⚠️"
-- [ ] Send via Resend to original sender's email
+- [x] ~~Write function `formatReportEmail(report)` → converts JSON to HTML email~~
+- [x] ~~Style: clean, scannable, mobile-friendly~~
+- [x] ~~Include section headers, bullet points, clickable links~~
+- [x] ~~Add verdict banner at top: "VALIDATED ✅" / "NEEDS MORE RESEARCH 🔍" / "CROWDED MARKET ⚠️"~~
+- [x] ~~Send via Resend to original sender's email~~
 - [ ] Test: trigger full flow → receive email in inbox
 - [ ] Measure end-to-end latency (target: <60s)
 - [ ] Pre-cache 3 example ideas with full research:
@@ -65,6 +65,42 @@ Signals — AI-Powered Market Intelligence  Turn any company name or pitch deck 
 - HN results + competitors
 - Claude-generated summary
 - Email out
+
+---
+
+## Frontend Integration (signals-intelligence.lovable.app)
+
+**Dependencies & Config:**
+- [ ] Install `@anthropic-ai/sdk` for Claude integration
+- [ ] Install `mongodb` driver for persistence
+- [ ] Install `firecrawl` SDK for web scraping
+- [ ] Install `voyageai` SDK for embeddings
+- [ ] Add `FRONTEND_URL=https://signals-intelligence.lovable.app` to `.env` for CORS
+
+**API Endpoints for Dashboard:**
+- [ ] `GET /api/dashboard/:id` → return full research results for dashboard display
+- [ ] `GET /api/dashboard/:id/status` → return processing status and progress %
+- [ ] `POST /api/search` → wire to real research pipeline (currently simulated)
+- [ ] `GET /api/search/results/:jobId` → return completed research results
+
+**Research Pipeline Orchestration:**
+- [ ] Create `src/services/research-pipeline.js` to orchestrate all research steps
+- [ ] Wire webhook handler to trigger research pipeline on email receipt
+- [ ] Call Claude to extract idea → call all research functions → generate report
+- [ ] Send progress updates via `/notify/progress` as each step completes
+- [ ] Store final results in MongoDB with dashboard ID
+
+**Data Flow:**
+- [ ] Frontend submits idea text → backend creates job → returns jobId
+- [ ] Backend runs research pipeline async → updates progress
+- [ ] Frontend polls `/api/job/:jobId/status` for progress
+- [ ] When complete, frontend fetches `/api/dashboard/:id` for full results
+- [ ] Display research sections: papers, HN threads, competitors, market signals, report
+
+**Replace In-Memory Storage with MongoDB:**
+- [ ] Replace `jobs` Map in `search.ts` with MongoDB collection
+- [ ] Replace `signups` Map in `signup.js` with MongoDB collection
+- [ ] Add indexes for fast dashboard lookup by ID
 
 ---
 
