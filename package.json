@@ -6,8 +6,11 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
+    "start:email": "node src/index.js",
     "dev": "tsx watch src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/e2e-resend.test.js",
+    "test:resend": "node test/verify-resend-direct.js",
+    "test:e2e": "node test/e2e-resend.test.js"
   },
   "repository": {
     "type": "git",
