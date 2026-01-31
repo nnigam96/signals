@@ -1,0 +1,625 @@
+{
+  "job_id": "bd4003b6-0340-4ed4-87fd-c9cf02f15b0b",
+  "duration": 11.026243209838867,
+  "pdf_url": "https://prod-storage20241010144745140900000001.s3.amazonaws.com/be82b9fd-74b1-4cb2-9057-b2e94748df16.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2UOK6OVBOUYL7WYA%2F20260131%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260131T212747Z&X-Amz-Expires=43200&X-Amz-SignedHeaders=host&X-Amz-Signature=8c8784ab82d75dc93ae7c9bc8df56cd1c10cd85a3649403374779a18e25e26ce",
+  "studio_link": "https://studio.reducto.ai/job/bd4003b6-0340-4ed4-87fd-c9cf02f15b0b",
+  "usage": {
+    "num_pages": 7,
+    "credits": 7.0
+  },
+  "result": {
+    "type": "full",
+    "chunks": [
+      {
+        "content": "> DOORDASH\n\nWe enable every\nrestaurant to deliver\n\nLead Gen\n\nCourier\n\nIntegrated\n\n\n\nseamless\npartners with grubHub\n\nTaskRabbit\n\n> DOORDASH\n\nGRUBHUB\n\nPOSTMATES\n\n# Average\ndelivery time\nminutes\n\nDoordash (Palo Santo) Peers (cities)\n\n70\n\n60\n\n50\n\n44 44\n\n40\n\n22222 C\n\n30\n\n20\n\n10\n\nDOORDASH\n\n# 31% week over week growth\n\n600\n\n500\n\n400\n\n300\n\n200\n\n100\n\n0\n0 2 3 4 5 6 7 8 9\n- orders\n\nO\n\nDOORDASH\n\n\n\n$1.5\nMillion\n\nAnnualized\nrestaurant sales\n\nDOORDASH\n\nLogistics\n\n+\n\n# Merchand\nintegration\n\n> DOORDASH\n\nXS\nWEAT\n\nThe Future:\nFedEx of Local\n\n> DOORDASH",
+        "embed": "> DOORDASH\n\nWe enable every\nrestaurant to deliver\n\nLead Gen\n\nCourier\n\nIntegrated\n\n\n\nseamless\npartners with grubHub\n\nTaskRabbit\n\n> DOORDASH\n\nGRUBHUB\n\nPOSTMATES\n\n# Average\ndelivery time\nminutes\n\nDoordash (Palo Santo) Peers (cities)\n\n70\n\n60\n\n50\n\n44 44\n\n40\n\n22222 C\n\n30\n\n20\n\n10\n\nDOORDASH\n\n# 31% week over week growth\n\n600\n\n500\n\n400\n\n300\n\n200\n\n100\n\n0\n0 2 3 4 5 6 7 8 9\n- orders\n\nO\n\nDOORDASH\n\n\n\n$1.5\nMillion\n\nAnnualized\nrestaurant sales\n\nDOORDASH\n\nLogistics\n\n+\n\n# Merchand\nintegration\n\n> DOORDASH\n\nXS\nWEAT\n\nThe Future:\nFedEx of Local\n\n> DOORDASH",
+        "enriched": null,
+        "enrichment_success": false,
+        "blocks": [
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.2897981940801713,
+              "top": 0.034828832538482186,
+              "width": 0.7094828212384094,
+              "height": 0.23521751790301235,
+              "page": 1,
+              "original_page": 1
+            },
+            "content": "",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.06024509929120541
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.3029488121240336,
+              "top": 0.3467251408115175,
+              "width": 0.3970246563666737,
+              "height": 0.084343135282787,
+              "page": 1,
+              "original_page": 1
+            },
+            "content": "> DOORDASH",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "low",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.1813672546297312
+            },
+            "extra": null
+          },
+          {
+            "type": "Text",
+            "bbox": {
+              "left": 0.31687599157556184,
+              "top": 0.5535218804887198,
+              "width": 0.3671592891434728,
+              "height": 0.12248901262468817,
+              "page": 1,
+              "original_page": 1
+            },
+            "content": "We enable every\nrestaurant to deliver",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.4548585884273052
+            },
+            "extra": null
+          },
+          {
+            "type": "Text",
+            "bbox": {
+              "left": 0.1109374427357914,
+              "top": 0.2887084669013342,
+              "width": 0.10873530814430582,
+              "height": 0.025781584385925534,
+              "page": 2,
+              "original_page": 2
+            },
+            "content": "Lead Gen",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.7191683501005173
+            },
+            "extra": null
+          },
+          {
+            "type": "Text",
+            "bbox": {
+              "left": 0.45421183261335396,
+              "top": 0.2703461559059692,
+              "width": 0.09152114705264458,
+              "height": 0.02821198213555802,
+              "page": 2,
+              "original_page": 2
+            },
+            "content": "Courier",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.7722520798444747
+            },
+            "extra": null
+          },
+          {
+            "type": "Text",
+            "bbox": {
+              "left": 0.7730866171361924,
+              "top": 0.2711833623638774,
+              "width": 0.12181480345994841,
+              "height": 0.0317326225834842,
+              "page": 2,
+              "original_page": 2
+            },
+            "content": "Integrated",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.7225135028362274
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.4573937442354261,
+              "top": 0.34059752581962643,
+              "width": 0.08394384501668159,
+              "height": 0.014538482540964204,
+              "page": 2,
+              "original_page": 2
+            },
+            "content": "",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.09683583229780197
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.07268608620087326,
+              "top": 0.42934953876737586,
+              "width": 0.19047708368052768,
+              "height": 0.10312728149069326,
+              "page": 2,
+              "original_page": 2
+            },
+            "content": "seamless\npartners with grubHub",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.7060079365968703
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.42920150425850045,
+              "top": 0.4106118108406507,
+              "width": 0.14670558613982562,
+              "height": 0.12758211907625877,
+              "page": 2,
+              "original_page": 2
+            },
+            "content": "TaskRabbit",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.8723176181316376
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.7291262803347096,
+              "top": 0.5176433227999646,
+              "width": 0.2134591463711316,
+              "height": 0.04207955583896844,
+              "page": 2,
+              "original_page": 2
+            },
+            "content": "> DOORDASH",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "low",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.3746080502867699
+            },
+            "extra": null
+          },
+          {
+            "type": "Text",
+            "bbox": {
+              "left": 0.08789104084160769,
+              "top": 0.6785061546032823,
+              "width": 0.15866697135840113,
+              "height": 0.045371589917845886,
+              "page": 2,
+              "original_page": 2
+            },
+            "content": "GRUBHUB",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.6650899454951287
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.44666435430022294,
+              "top": 0.630993032065526,
+              "width": 0.11954552318198737,
+              "height": 0.1443522168092488,
+              "page": 2,
+              "original_page": 2
+            },
+            "content": "POSTMATES",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.6944830775260925
+            },
+            "extra": null
+          },
+          {
+            "type": "Title",
+            "bbox": {
+              "left": 0.08635554555038372,
+              "top": 0.24334913759737176,
+              "width": 0.23153158319147638,
+              "height": 0.1487461950562159,
+              "page": 3,
+              "original_page": 3
+            },
+            "content": "Average\ndelivery time\nminutes",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.6641350656747818
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.41851623060222143,
+              "top": 0.075508510431169,
+              "width": 0.5814837693977786,
+              "height": 0.866373533129057,
+              "page": 3,
+              "original_page": 3
+            },
+            "content": "Doordash (Palo Santo) Peers (cities)\n\n70\n\n60\n\n50\n\n44 44\n\n40\n\n22222 C\n\n30\n\n20\n\n10",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "low",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.29286607950925825
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.013332653592666577,
+              "top": 0.3961197112865686,
+              "width": 0.9847552461225828,
+              "height": 0.5483761285780951,
+              "page": 3,
+              "original_page": 3
+            },
+            "content": "DOORDASH",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.467103985697031
+            },
+            "extra": null
+          },
+          {
+            "type": "Title",
+            "bbox": {
+              "left": 0.0885680482244429,
+              "top": 0.23235704598722223,
+              "width": 0.4849385418313255,
+              "height": 0.056288019370000074,
+              "page": 4,
+              "original_page": 4
+            },
+            "content": "31% week over week growth",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.7985665470361709
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.08580266422560541,
+              "top": 0.4115763449949051,
+              "width": 0.6694512905649203,
+              "height": 0.39260788573522015,
+              "page": 4,
+              "original_page": 4
+            },
+            "content": "600\n\n500\n\n400\n\n300\n\n200\n\n100\n\n0\n0 2 3 4 5 6 7 8 9\n- orders",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "low",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.7292686134576798
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.8242840061288547,
+              "top": 0.05581221689654136,
+              "width": 0.17571599387114537,
+              "height": 0.8837121779833474,
+              "page": 4,
+              "original_page": 4
+            },
+            "content": "O",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "low",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.7325689032673837
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.07720230209034562,
+              "top": 0.8410701840194741,
+              "width": 0.21494515096197084,
+              "height": 0.04606563909904266,
+              "page": 4,
+              "original_page": 4
+            },
+            "content": "DOORDASH",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.6870306551456451
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.37857054430607906,
+              "top": 0.05196520392256607,
+              "width": 0.5716010541652675,
+              "height": 0.8910007440342446,
+              "page": 5,
+              "original_page": 5
+            },
+            "content": "",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.5950706899166107
+            },
+            "extra": null
+          },
+          {
+            "type": "Text",
+            "bbox": {
+              "left": 0.11129058885100286,
+              "top": 0.3441064936920584,
+              "width": 0.108950281017423,
+              "height": 0.12653490576426646,
+              "page": 5,
+              "original_page": 5
+            },
+            "content": "$1.5\nMillion",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.8159999281167984
+            },
+            "extra": null
+          },
+          {
+            "type": "Text",
+            "bbox": {
+              "left": 0.07434628869046729,
+              "top": 0.5531635877870945,
+              "width": 0.18780674891461668,
+              "height": 0.07226589710518684,
+              "page": 5,
+              "original_page": 5
+            },
+            "content": "Annualized\nrestaurant sales",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.9175347447395324
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.07976445582946597,
+              "top": 0.8396402114195107,
+              "width": 0.21231227220098198,
+              "height": 0.041086676738222534,
+              "page": 5,
+              "original_page": 5
+            },
+            "content": "DOORDASH",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.8043850719928742
+            },
+            "extra": null
+          },
+          {
+            "type": "Text",
+            "bbox": {
+              "left": 0.12945368171021376,
+              "top": 0.4546218487394958,
+              "width": 0.24228028503562946,
+              "height": 0.073109243697479,
+              "page": 6,
+              "original_page": 6
+            },
+            "content": "Logistics",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.6862738937139511
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.46599301589639625,
+              "top": 0.4451845313320641,
+              "width": 0.06868589858827569,
+              "height": 0.0956298828125,
+              "page": 6,
+              "original_page": 6
+            },
+            "content": "+",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.6897009998559952
+            },
+            "extra": null
+          },
+          {
+            "type": "Title",
+            "bbox": {
+              "left": 0.5997624703087886,
+              "top": 0.40588235294117647,
+              "width": 0.31175771971496435,
+              "height": 0.1689075630252101,
+              "page": 6,
+              "original_page": 6
+            },
+            "content": "Merchand\nintegration",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.6516988471150398
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.07701027478288301,
+              "top": 0.8424088678440126,
+              "width": 0.21418327277176738,
+              "height": 0.040945973115808824,
+              "page": 6,
+              "original_page": 6
+            },
+            "content": "> DOORDASH",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "low",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.5409767091274261
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.0,
+              "top": 0.05637076882755055,
+              "width": 0.5018362013574451,
+              "height": 0.7669296841661469,
+              "page": 7,
+              "original_page": 7
+            },
+            "content": "XS\nWEAT",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "low",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.8839224934577943
+            },
+            "extra": null
+          },
+          {
+            "type": "Text",
+            "bbox": {
+              "left": 0.6264845605700713,
+              "top": 0.46638655462184875,
+              "width": 0.2529691211401425,
+              "height": 0.09831932773109243,
+              "page": 7,
+              "original_page": 7
+            },
+            "content": "The Future:\nFedEx of Local",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "high",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.641472439467907
+            },
+            "extra": null
+          },
+          {
+            "type": "Figure",
+            "bbox": {
+              "left": 0.6441720704284813,
+              "top": 0.8505740382090337,
+              "width": 0.21376744358669833,
+              "height": 0.04179020729385504,
+              "page": 7,
+              "original_page": 7
+            },
+            "content": "> DOORDASH",
+            "image_url": null,
+            "chart_data": null,
+            "confidence": "low",
+            "granular_confidence": {
+              "extract_confidence": null,
+              "parse_confidence": 0.5007925361394883
+            },
+            "extra": null
+          }
+        ]
+      }
+    ],
+    "ocr": null,
+    "custom": null
+  }
+}
