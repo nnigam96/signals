@@ -32,6 +32,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.72.1",
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^4.22.1",
