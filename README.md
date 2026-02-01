@@ -109,7 +109,7 @@ Voyage Embed: POST https://api.voyageai.com/v1/embeddings
 - [x] ~~Resend API key (coupon: sfh4cks)~~
 - [ ] ~~MongoDB Atlas connection string~~ *(stretch - use in-memory)*
 - [ ] ~~Voyage AI API key~~ *(stretch)*
-- [ ] Anthropic API key (for Claude)
+- [ ] ~~Anthropic API key (for Claude)~~
 - [ ] ~~(Optional) OpenRouter key if using multi-model~~
 
 Contributors: @nnigam96 @zubair

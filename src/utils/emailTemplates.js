@@ -96,6 +96,71 @@ const baseStyles = `
   .verdict-validated { background-color: #d1fae5; color: #065f46; }
   .verdict-research { background-color: #fef3c7; color: #92400e; }
   .verdict-crowded { background-color: #fee2e2; color: #991b1b; }
+
+  /* Mobile responsive styles */
+  @media only screen and (max-width: 600px) {
+    body {
+      padding: 12px !important;
+      max-width: 100% !important;
+    }
+    .container {
+      padding: 20px !important;
+      border-radius: 8px !important;
+    }
+    .logo {
+      font-size: 20px !important;
+      margin-bottom: 20px !important;
+    }
+    h1 {
+      font-size: 20px !important;
+    }
+    .button {
+      padding: 14px 28px !important;
+      display: block !important;
+      text-align: center !important;
+      margin: 20px 0 !important;
+    }
+    .footer {
+      margin-top: 24px !important;
+      font-size: 11px !important;
+    }
+    .stage-item {
+      padding: 10px 0 !important;
+      font-size: 14px !important;
+    }
+    .data-preview {
+      padding: 10px !important;
+      font-size: 13px !important;
+    }
+    ul {
+      padding-left: 16px !important;
+    }
+    li {
+      margin-bottom: 8px !important;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    body {
+      padding: 8px !important;
+    }
+    .container {
+      padding: 16px !important;
+    }
+    .logo {
+      font-size: 18px !important;
+    }
+    h1 {
+      font-size: 18px !important;
+    }
+    .button {
+      padding: 12px 20px !important;
+      font-size: 14px !important;
+    }
+    .stage-item {
+      font-size: 13px !important;
+    }
+  }
 `;
 
 /**
