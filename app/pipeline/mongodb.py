@@ -66,7 +66,7 @@ def _init_indexes():
                             {"type": "filter", "path": "company_slug"}
                         ]
                     },
-                    name="vector_index",
+                    name="vector_search",
                     type="vectorSearch"
                 )
                 _db.knowledge.create_search_index(model=index_model)
@@ -225,7 +225,7 @@ def search_knowledge_by_vector(query_vector: List[float], company_slug: str = No
     pipeline = [
         {
             "$vectorSearch": {
-                "index": "vector_index",
+                "index": "vector_search",
                 "path": "vector",
                 "queryVector": query_vector,
                 "numCandidates": limit * 10,
