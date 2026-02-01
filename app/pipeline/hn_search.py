@@ -16,6 +16,12 @@ logger = logging.getLogger(__name__)
 
 HN_ALGOLIA_BASE = "https://hn.algolia.com/api/v1"
 
+# Headers to avoid 403 errors from Algolia
+DEFAULT_HEADERS = {
+    "User-Agent": "Signals-Intelligence/1.0 (Market Research Tool)",
+    "Accept": "application/json",
+}
+
 
 async def search_hn(
     query: str,
@@ -55,7 +61,7 @@ async def search_hn(
     }
 
     try:
-        async with httpx.AsyncClient(timeout=30) as client:
+        async with httpx.AsyncClient(timeout=30, headers=DEFAULT_HEADERS) as client:
             res = await client.get(
                 f"{HN_ALGOLIA_BASE}/search",
                 params=params,
@@ -109,7 +115,7 @@ async def get_hn_comments(object_id: str, limit: int = 20) -> list[dict[str, Any
     }
 
     try:
-        async with httpx.AsyncClient(timeout=30) as client:
+        async with httpx.AsyncClient(timeout=30, headers=DEFAULT_HEADERS) as client:
             res = await client.get(
                 f"{HN_ALGOLIA_BASE}/search",
                 params=params,
