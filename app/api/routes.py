@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from app.chat.handler import handle_chat_message
 from app.pipeline.orchestrator import run_pipeline, refresh_company
 from app.pipeline.mongodb import list_companies, get_company, search_companies, toggle_watchlist
+from app.pipeline.openrouter import calculate_vector_scores
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api")
@@ -83,6 +84,29 @@ async def search(q: str = ""):
 async def get_single_company(slug: str):
     c = get_company(slug)
     return {"company": _s(c)} if c else {"error": "Not found"}
+
+
+@router.get("/companies/{slug}/vector-scores")
+async def get_vector_scores(slug: str):
+    """
+    Calculate cross-vector scores for a company using AI analysis.
+    Returns scores (0-100) for: hiring_velocity, product_signals,
+    external_attention, funding_activity, and market_momentum.
+    """
+    company = get_company(slug)
+    if not company:
+        return {"error": "Company not found"}
+
+    try:
+        scores = await calculate_vector_scores(
+            name=company.get("name", slug),
+            company_data=company
+        )
+        return {"success": True, "scores": _s(scores)}
+    except Exception as e:
+        logger.error(f"[api] Vector scores error for {slug}: {e}")
+        return {"error": str(e)}
+
 
 @router.post("/watchlist")
 async def update_watchlist(req: WatchlistRequest):
