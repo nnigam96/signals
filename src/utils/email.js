@@ -116,6 +116,60 @@ function formatReportEmail(report) {
       font-size: 12px;
       color: #6b7280;
     }
+
+    /* Mobile responsive styles */
+    @media only screen and (max-width: 600px) {
+      body {
+        padding: 12px !important;
+        max-width: 100% !important;
+      }
+      .container {
+        padding: 20px !important;
+        border-radius: 8px !important;
+      }
+      .verdict-banner {
+        padding: 12px 16px !important;
+        font-size: 16px !important;
+        margin-bottom: 20px !important;
+      }
+      .section {
+        margin-bottom: 20px !important;
+      }
+      .section-title {
+        font-size: 15px !important;
+        padding-bottom: 6px !important;
+        margin-bottom: 12px !important;
+      }
+      .competitor-card {
+        padding: 10px !important;
+      }
+      ul {
+        padding-left: 16px !important;
+      }
+      li {
+        margin-bottom: 10px !important;
+      }
+      .footer {
+        margin-top: 24px !important;
+        font-size: 11px !important;
+      }
+    }
+
+    @media only screen and (max-width: 400px) {
+      body {
+        padding: 8px !important;
+      }
+      .container {
+        padding: 16px !important;
+      }
+      .verdict-banner {
+        padding: 10px 12px !important;
+        font-size: 14px !important;
+      }
+      .section-title {
+        font-size: 14px !important;
+      }
+    }
   </style>
 </head>
 <body>
