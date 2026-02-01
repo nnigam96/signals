@@ -206,8 +206,16 @@ async def _find_company_url(name: str) -> str:
     return ""
 
 
-async def search_web(query: str, limit: int = 5) -> list[str]:
-    """Basic search that returns a list of markdown snippets."""
+async def search_web(query: str, limit: int = 5, return_dicts: bool = False) -> list:
+    """
+    Basic search that returns results from the web.
+
+    Args:
+        query: Search query
+        limit: Max results to return
+        return_dicts: If True, returns list of dicts with url/title/description.
+                      If False, returns list of formatted strings for backwards compat.
+    """
     async with httpx.AsyncClient(timeout=30) as client:
         try:
             res = await client.post(
@@ -220,7 +228,22 @@ async def search_web(query: str, limit: int = 5) -> list[str]:
                 return []
 
             data = res.json()
-            return [item.get("markdown", "") for item in data.get("data", [])]
+            items = data.get("data", [])
+
+            if return_dicts:
+                return items
+
+            # Return formatted strings (title + description) for backwards compat
+            results = []
+            for item in items:
+                title = item.get("title", "")
+                desc = item.get("description", "")
+                url = item.get("url", "")
+                if title or desc:
+                    results.append(f"**{title}**\n{desc}\n{url}")
+                elif item.get("markdown"):
+                    results.append(item["markdown"])
+            return results
         except Exception as e:
             logger.error(f"[firecrawl] Search exception: {e}")
             return []

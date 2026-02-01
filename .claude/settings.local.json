@@ -3,7 +3,8 @@
     "allow": [
       "Bash(git -C \"/Users/nnigam/Personal Projects/Personal/signals-1\" status)",
       "Bash(git -C \"/Users/nnigam/Personal Projects/Personal/signals-1\" diff app/pipeline/mongodb.py)",
-      "Bash(python scripts/setup_schema.py:*)"
+      "Bash(python scripts/setup_schema.py:*)",
+      "Bash(/opt/homebrew/Caskroom/miniconda/base/envs/signals/bin/python:*)"
     ]
   }
 }
