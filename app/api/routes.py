@@ -90,8 +90,7 @@ async def get_single_company(slug: str):
 async def get_vector_scores(slug: str):
     """
     Calculate cross-vector scores for a company using AI analysis.
-    Returns scores (0-100) for: hiring_velocity, product_signals,
-    external_attention, funding_activity, and market_momentum.
+    Returns data formatted for CrossVectorData and Signal interfaces.
     """
     company = get_company(slug)
     if not company:
@@ -102,7 +101,62 @@ async def get_vector_scores(slug: str):
             name=company.get("name", slug),
             company_data=company
         )
-        return {"success": True, "scores": _s(scores)}
+
+        # Fixed 5 categories with angles (72° apart for pentagon)
+        vectors = [
+            {"label": "Market Momentum", "angle": 0},
+            {"label": "Hiring Velocity", "angle": 72},
+            {"label": "Product Signals", "angle": 144},
+            {"label": "External Attention", "angle": 216},
+            {"label": "Funding Activity", "angle": 288},
+        ]
+
+        # Convert 0-100 scores to 0-1 values in matching order
+        values = [
+            scores.get("market_momentum", 50) / 100,
+            scores.get("hiring_velocity", 50) / 100,
+            scores.get("product_signals", 50) / 100,
+            scores.get("external_attention", 50) / 100,
+            scores.get("funding_activity", 50) / 100,
+        ]
+
+        # Build signals array for Signal interface
+        def get_signal_status(score: int) -> str:
+            return "active" if score >= 50 else "idle"
+
+        signals = [
+            {
+                "type": "Hiring",
+                "status": get_signal_status(scores.get("hiring_velocity", 50)),
+                "lastChecked": "just now"
+            },
+            {
+                "type": "Product",
+                "status": get_signal_status(scores.get("product_signals", 50)),
+                "lastChecked": "just now"
+            },
+            {
+                "type": "Funding",
+                "status": get_signal_status(scores.get("funding_activity", 50)),
+                "lastChecked": "just now"
+            },
+            {
+                "type": "Web Changes",
+                "status": get_signal_status(scores.get("external_attention", 50)),
+                "lastChecked": "just now"
+            },
+        ]
+
+        return {
+            "success": True,
+            "crossVectorData": {
+                "vectors": vectors,
+                "values": values
+            },
+            "signals": signals,
+            "reasoning": _s(scores.get("reasoning", {})),
+            "raw_scores": _s(scores)
+        }
     except Exception as e:
         logger.error(f"[api] Vector scores error for {slug}: {e}")
         return {"error": str(e)}
