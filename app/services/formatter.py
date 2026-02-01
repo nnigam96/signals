@@ -501,6 +501,203 @@ def _format_signal_details(agent_metrics: dict, analysis: dict) -> str:
 
 
 # =============================================================================
+# HIGHLIGHTS FORMATTER
+# =============================================================================
+
+def format_company_highlights(raw_data: dict) -> dict:
+    """
+    Extract key numerical highlights for a company.
+
+    Returns structured metrics for:
+    - Hiring: open roles, status, growth indicator
+    - Funding: amount, round, growth indicator
+    - Growth signals: positive/negative indicators
+    """
+    name = raw_data.get("name", "Unknown")
+    slug = raw_data.get("slug", "")
+    agent_metrics = raw_data.get("agent_metrics", {})
+    analysis = raw_data.get("analysis", {})
+    metrics = analysis.get("metrics", {})
+
+    # === HIRING METRICS ===
+    hiring = agent_metrics.get("hiring_velocity", {})
+    hiring_status = hiring.get("hiring_status", "unknown")
+    open_roles = hiring.get("open_roles_count")
+    top_departments = hiring.get("top_departments", [])
+
+    # Determine hiring growth indicator
+    hiring_growth = "neutral"
+    if hiring_status.lower() == "aggressive":
+        hiring_growth = "positive"
+    elif hiring_status.lower() == "freeze":
+        hiring_growth = "negative"
+    elif hiring_status.lower() == "active":
+        hiring_growth = "positive"
+
+    hiring_highlight = {
+        "openRoles": open_roles,
+        "status": hiring_status,
+        "topDepartments": top_departments[:3] if top_departments else [],
+        "growth": hiring_growth,
+        "hasData": open_roles is not None or hiring_status != "unknown"
+    }
+
+    # === FUNDING METRICS ===
+    funding_str = analysis.get("funding") or raw_data.get("funding")
+    funding_amount = _parse_funding_amount(funding_str)
+    last_round = raw_data.get("lastFundingRound") or _infer_funding_round(funding_str)
+
+    # Funding growth is positive if recent round detected
+    funding_growth = "positive" if funding_amount and funding_amount > 0 else "neutral"
+
+    funding_highlight = {
+        "totalRaised": funding_str,
+        "amountNumeric": funding_amount,
+        "lastRound": last_round,
+        "growth": funding_growth,
+        "hasData": funding_str is not None
+    }
+
+    # === GROWTH SIGNALS ===
+    # Collect all positive and negative indicators
+    positive_signals = []
+    negative_signals = []
+
+    # From hiring
+    if hiring_growth == "positive":
+        msg = f"Hiring {open_roles} roles" if open_roles else f"{hiring_status} hiring"
+        positive_signals.append({"type": "hiring", "message": msg})
+    elif hiring_growth == "negative":
+        negative_signals.append({"type": "hiring", "message": "Hiring freeze detected"})
+
+    # From dev velocity
+    dev = agent_metrics.get("dev_velocity", {})
+    update_freq = dev.get("update_frequency", "").lower()
+    if update_freq in ["daily", "weekly"]:
+        positive_signals.append({
+            "type": "product",
+            "message": f"{update_freq.title()} product updates",
+            "detail": dev.get("latest_feature")
+        })
+    elif update_freq in ["stale", "inactive"]:
+        negative_signals.append({
+            "type": "product",
+            "message": "Stale product development"
+        })
+
+    # From pricing/GTM
+    pricing = agent_metrics.get("pricing_model", {})
+    if pricing.get("pricing_strategy") == "PLG" and pricing.get("has_free_tier"):
+        positive_signals.append({
+            "type": "gtm",
+            "message": "PLG with free tier",
+            "detail": f"Paid from ${pricing.get('lowest_paid_price', 'N/A')}/mo"
+        })
+
+    # From sentiment
+    sentiment = metrics.get("sentiment", "").lower()
+    signal_strength = metrics.get("signal_strength")
+
+    if sentiment == "bullish" or (signal_strength and signal_strength >= 70):
+        positive_signals.append({
+            "type": "sentiment",
+            "message": "Strong market position",
+            "score": signal_strength
+        })
+    elif sentiment == "bearish" or (signal_strength and signal_strength < 30):
+        negative_signals.append({
+            "type": "sentiment",
+            "message": "Weak market signals",
+            "score": signal_strength
+        })
+
+    # From red flags
+    red_flags = analysis.get("red_flags", [])
+    for flag in red_flags[:2]:  # Limit to 2
+        negative_signals.append({"type": "risk", "message": str(flag)})
+
+    # From strengths
+    strengths = analysis.get("strengths", [])
+    for strength in strengths[:2]:  # Limit to 2
+        positive_signals.append({"type": "strength", "message": str(strength)})
+
+    # Overall growth indicator
+    overall_growth = "neutral"
+    if len(positive_signals) > len(negative_signals) + 1:
+        overall_growth = "positive"
+    elif len(negative_signals) > len(positive_signals) + 1:
+        overall_growth = "negative"
+    elif len(positive_signals) > len(negative_signals):
+        overall_growth = "slightly_positive"
+    elif len(negative_signals) > len(positive_signals):
+        overall_growth = "slightly_negative"
+
+    return {
+        "company": {
+            "name": name,
+            "slug": slug,
+            "sector": infer_sector(name, analysis.get("summary")),
+        },
+        "hiring": hiring_highlight,
+        "funding": funding_highlight,
+        "signals": {
+            "positive": positive_signals,
+            "negative": negative_signals,
+            "overall": overall_growth,
+            "score": signal_strength,
+            "sentiment": sentiment or "neutral"
+        },
+        "updatedAt": raw_data.get("updated_at", datetime.now(timezone.utc)).isoformat()
+            if hasattr(raw_data.get("updated_at", ""), "isoformat")
+            else str(raw_data.get("updated_at", datetime.now(timezone.utc).isoformat()))
+    }
+
+
+def _parse_funding_amount(funding_str: str | None) -> float | None:
+    """Parse funding string like '$50M' or '$1.2B' to numeric value."""
+    if not funding_str:
+        return None
+
+    import re
+    match = re.search(r'\$?([\d.]+)\s*([BMK])?', funding_str, re.IGNORECASE)
+    if not match:
+        return None
+
+    amount = float(match.group(1))
+    multiplier = match.group(2)
+
+    if multiplier:
+        multiplier = multiplier.upper()
+        if multiplier == 'B':
+            amount *= 1_000_000_000
+        elif multiplier == 'M':
+            amount *= 1_000_000
+        elif multiplier == 'K':
+            amount *= 1_000
+
+    return amount
+
+
+def _infer_funding_round(funding_str: str | None) -> str | None:
+    """Infer funding round from funding string."""
+    if not funding_str:
+        return None
+
+    funding_lower = funding_str.lower()
+    if "seed" in funding_lower:
+        return "Seed"
+    elif "series a" in funding_lower:
+        return "Series A"
+    elif "series b" in funding_lower:
+        return "Series B"
+    elif "series c" in funding_lower:
+        return "Series C"
+    elif "series d" in funding_lower or "series e" in funding_lower:
+        return "Late Stage"
+    return None
+
+
+# =============================================================================
 # CONVENIENCE WRAPPER
 # =============================================================================
 
